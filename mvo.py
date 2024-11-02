@@ -6,10 +6,9 @@ import yfinance as yf
 from datetime import datetime
 
 #spx = pd.read_csv("./SPX_500_Historical_Constituents(08-17-2024).csv")
-#stocks = ['XLC', 'XLY', 'XLP', 'XLE', 'XLF', 'XLV', 'XLI', 'XLB', 'XLRE', 'XLK', 'XLU']
-stocks = ['AAPL', 'NVDA', 'MSFT', 'AMZN', 'META', 'GOOGL', 'BRK-B', 'AVGO', 'GOOG', 'TSLA', 'LLY', 'JPM', 'XOM', 'UNH', 'V']
+stocks = ['XLY', 'XLP', 'XLE', 'XLF', 'XLV', 'XLI', 'XLB', 'XLK', 'XLU']
 
-dataset = yf.download(stocks, start=datetime(2019, 10, 30), end=datetime(2024, 10, 31))['Adj Close']
+dataset = yf.download(stocks, start=datetime(2013, 10, 30), end=datetime(2024, 10, 31))['Adj Close']
 
 def log_return(data):
     log_return = np.log(data/data.shift(1))
@@ -48,7 +47,7 @@ def optimal_portfolio(sr, r, v, w):
 
 lookback = 252
 rebalance_freq = 126
-NUM_PORTFOLIOS = 10000
+NUM_PORTFOLIOS = 1000
 actual_returns = 0
 expected_sr = 0
 
