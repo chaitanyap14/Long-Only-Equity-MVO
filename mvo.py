@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from datetime import datetime
 
-stocks = ['AAPL', 'NVDA', 'MSFT', 'AMZN', 'META', 'GOOGL', 'BRK-B', 'AVGO', 'GOOG', 'TSLA', 'LLY', 'JPM', 'XOM', 'UNH', 'V']
+spx = pd.read_csv("./SPX_top20.csv")
+spx['tickers'] = spx['tickers'].apply(lambda x: x.split(', '))
+stocks = spx['tickers'][34]
 #stocks = ['XLY', 'XLP', 'XLE', 'XLF', 'XLV', 'XLI', 'XLB', 'XLK', 'XLU']
 
 dataset = yf.download(stocks, start=datetime(2019, 10, 30), end=datetime(2024, 10, 31))['Adj Close']
@@ -15,7 +17,8 @@ def log_return(data):
     return log_return[1:]
 
 log_daily_return = log_return(dataset)
-print(log_daily_return.mean())
+print(stocks)
+print(log_daily_return)
 
 dataset.plot(figsize=(10,6))
 plt.show()
@@ -47,9 +50,9 @@ def optimal_portfolio(sr, r, v, w):
 
     return r, v, sr, w
 
-lookback = 252
+lookback = 378
 rebalance_freq = 126
-NUM_PORTFOLIOS = 10000
+NUM_PORTFOLIOS = 5000
 actual_returns = []
 expected_sr = []
 
@@ -63,7 +66,4 @@ annualized_logreturn = np.mean(actual_returns)*(lookback/rebalance_freq)
 print("Annualized log return: ", annualized_logreturn)
 print("Annualized actual return: ", np.exp(annualized_logreturn)-1)
 print("Expected Sharpe Ratio: ", np.mean(expected_sr))
-#print("Annualized Log Returns: ", actual_returns/2)
-#print("Annualized Returns: ", np.exp(actual_returns/2)-1)
-#print("Average Expected Sharpe Ratio: ", expected_sr/4)
 
