@@ -5,10 +5,7 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from datetime import datetime
 
-spx = pd.read_csv("./SPX_top20.csv")
-spx['tickers'] = spx['tickers'].apply(lambda x: x.split(', '))
-stocks = spx['tickers'][34]
-#stocks = ['XLY', 'XLP', 'XLE', 'XLF', 'XLV', 'XLI', 'XLB', 'XLK', 'XLU']
+stocks = ['XLC', 'XLRE', 'XLY', 'XLP', 'XLE', 'XLF', 'XLV', 'XLI', 'XLB', 'XLK', 'XLU']
 
 dataset = yf.download(stocks, start=datetime(2019, 10, 30), end=datetime(2024, 10, 31))['Adj Close']
 
@@ -50,7 +47,7 @@ def optimal_portfolio(sr, r, v, w):
 
     return r, v, sr, w
 
-lookback = 378
+lookback = 252
 rebalance_freq = 126
 NUM_PORTFOLIOS = 5000
 actual_returns = []
